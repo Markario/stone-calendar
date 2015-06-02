@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.markario.calendar.DayView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" />
+    android:minHeight="@dimen/min_touch"
+    android:minWidth="@dimen/min_touch"
+    android:layout_margin="@dimen/margin_quarter">
+
+    <com.markario.calendar.DayView
+        android:id="@+id/dayview"
+        android:layout_width="@dimen/min_touch"
+        android:layout_height="@dimen/min_touch"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_day"
+        android:gravity="center" />
+</LinearLayout>

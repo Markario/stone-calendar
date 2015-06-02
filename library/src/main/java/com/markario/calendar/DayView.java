@@ -4,12 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 /**
  * Created by markzepeda on 6/1/15.
  */
-public class DayView extends TextView {
+public class DayView extends CheckedTextView {
     public DayView(Context context) {
         super(context);
     }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DayView" parent="android:Widget.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small.Day</item>
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Day">
+
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.DayHeader">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Large.Month">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BaseCalendarStyle">
+        <item name="dayViewStyle">@style/DayView</item>
+        <item name="dayTextAppearance">@style/TextAppearance.AppCompat.Small.Day</item>
+        <item name="dayHeaderTextAppearance">@style/TextAppearance.AppCompat.Small.DayHeader</item>
+        <item name="monthTextAppearance">@style/TextAppearance.AppCompat.Large.Month</item>
+    </style>
+</resources>

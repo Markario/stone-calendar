@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalendarView">
+        <attr name="dayViewStyle" format="reference" />
+        <attr name="dayTextAppearance" format="reference" />
+        <attr name="dayHeaderTextAppearance" format="reference" />
+        <attr name="monthTextAppearance" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CalendarViewTheme">
+        <attr name="calendarViewStyle" format="reference" />
+    </declare-styleable>
+</resources>
