@@ -19,7 +19,7 @@ public class DayGridRecyclerView extends RecyclerView {
     private static final String TAG = DayGridRecyclerView.class.getSimpleName();
 
     private GridLayoutManager layoutManager;
-    private int numDayColumns = 7;
+    private int numDayColumns;
 
     private int dayTextAppearanceId;
     private int dayHeaderTextAppearanceId;
@@ -131,7 +131,7 @@ public class DayGridRecyclerView extends RecyclerView {
         }
 
         public String getDayOfWeekString(int position) {
-            return daysOfWeek[position % (daysOfWeek.length - 1)];
+            return daysOfWeek[position % daysOfWeek.length];
         }
 
         @Override
