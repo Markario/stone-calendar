@@ -1,0 +1,100 @@
+package com.markario.calendar;
+
+import android.support.v4.util.Pools;
+import android.support.v4.view.PagerAdapter;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+/**
+ * Created by markzepeda on 6/1/15.
+ */
+public class WeeksViewPagerAdapter extends PagerAdapter {
+
+    private static final String TAG = WeeksViewPagerAdapter.class.getSimpleName();
+
+    public static final int MONTH_WEEKS = 0;
+    public static final int ONE_WEEK = 1;
+    public static final int TWO_WEEKS = 2;
+
+    private Pools.SynchronizedPool<WeeksView> weeksViewPool;
+
+    private int weeksToDisplay;
+    private String[] dayLabels;
+    int firstWeekDay;
+    int daysInWeeksView;
+
+    List<Day> days = new ArrayList<>();
+
+    public WeeksViewPagerAdapter(int poolSize, String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay) {
+        this.weeksViewPool = new Pools.SynchronizedPool<>(poolSize);
+        this.dayLabels = dayLabels;
+        this.firstWeekDay = firstWeekDay;
+        this.weeksToDisplay = weeksToDisplay;
+
+        while(calendar.get(Calendar.DAY_OF_WEEK) != firstWeekDay){
+            calendar.roll(Calendar.DAY_OF_YEAR, -1);
+        }
+
+        System.out.println("Starting day calculations");
+
+        while(calendar.before(lastDay)){
+            days.add(new Day(calendar));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        System.out.println("Finished day calculations: Days: "+days.size());
+
+        daysInWeeksView = dayLabels.length * weeksToDisplay;
+    }
+
+    @Override
+    public int getCount() {
+        return days.size()/daysInWeeksView;
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        WeeksView view = weeksViewPool.acquire();
+
+        if(view != null){
+            Log.i(TAG, "View was recycled from pool");
+        }
+
+        if(view == null){
+            view = new WeeksView(container.getContext());
+            view.init(dayLabels);
+        }
+
+        container.addView(view);
+
+        view.getAdapter().clear();
+
+        int first = getFirstDayIndexForViewPosition(position);
+        int last = first + daysInWeeksView;
+        for(int i = first; i < last; i++){
+            view.getAdapter().add(days.get(i));
+        }
+
+        return view;
+    }
+
+    private int getFirstDayIndexForViewPosition(int position){
+        return position * daysInWeeksView;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        WeeksView view = (WeeksView) object;
+        container.removeView(view);
+        weeksViewPool.release(view);
+    }
+}
