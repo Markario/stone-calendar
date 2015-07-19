@@ -10,6 +10,7 @@ public class Day {
     public int year;
     public int dayOfMonth;
     public int dayOfWeek;
+    public long time;
     public String label;
 
     public Day(String label) {
@@ -22,6 +23,7 @@ public class Day {
         this.year = calendar.get(Calendar.YEAR);
         this.month = calendar.get(Calendar.MONTH);
         this.label = dayOfMonth + "";
+        time = calendar.getTimeInMillis();
         //System.out.println(toString());
     }
 
@@ -32,6 +34,8 @@ public class Day {
                 ", year=" + year +
                 ", dayOfMonth=" + dayOfMonth +
                 ", dayOfWeek=" + dayOfWeek +
+                ", time=" + time +
+                ", label='" + label + '\'' +
                 '}';
     }
 }

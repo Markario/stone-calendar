@@ -43,7 +43,7 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
             @Override
             public void onClick(View v) {
                 view.setChecked(true);
-                Log.i(TAG, "Clicked: " + day.label);
+                Log.i(TAG, "Clicked: " + day.toString());
             }
         });
     }

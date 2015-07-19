@@ -4,15 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2B3033"
+        android:height="40dp"
+        android:textSize="15sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"/>
+
     <com.markario.calendar.WeeksView
         android:id="@+id/day_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F0F3F5"/>
+        android:background="#F0F3F5" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F0F3FF"/>
+        android:background="#FFFFFF" />
 </merge>

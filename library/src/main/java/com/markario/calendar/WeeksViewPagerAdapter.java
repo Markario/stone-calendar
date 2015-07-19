@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
     private String[] dayLabels;
     int firstWeekDay;
     int daysInWeeksView;
+    private Date actualFirstDate;
 
     List<Day> days = new ArrayList<>();
 
@@ -37,16 +39,14 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
         this.weeksToDisplay = weeksToDisplay;
 
         while(calendar.get(Calendar.DAY_OF_WEEK) != firstWeekDay){
-            calendar.roll(Calendar.DAY_OF_YEAR, -1);
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            actualFirstDate = calendar.getTime();
         }
-
-        System.out.println("Starting day calculations");
 
         while(calendar.before(lastDay)){
             days.add(new Day(calendar));
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        System.out.println("Finished day calculations: Days: "+days.size());
 
         daysInWeeksView = dayLabels.length * weeksToDisplay;
     }
@@ -96,5 +96,25 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
         WeeksView view = (WeeksView) object;
         container.removeView(view);
         weeksViewPool.release(view);
+    }
+
+    public int getPositionForDate(Date target){
+        int i = 0;
+        Calendar start = Calendar.getInstance();
+        start.setTime(actualFirstDate);
+        Calendar targetCal = Calendar.getInstance();
+        targetCal.setTime(target);
+
+        while(start.before(targetCal)){
+            start.add(Calendar.DAY_OF_MONTH, 1);
+            i++;
+        }
+
+        return i;
+    }
+
+    public Day getDayForPage(int page){
+        Day day = days.get(getFirstDayIndexForViewPosition(page));
+        return day;
     }
 }
