@@ -51,23 +51,23 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
 
         final Day day = getItem(position);
         view.setText(day.label);
+        holder.setDay(day);
+        day.setDayViewHolder(holder);
 
         if(checkable) {
             view.setChecked(day.isChecked);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!view.isChecked()) {
-                        view.setChecked(true);
-                        day.isChecked = true;
-                        if (dayClickListener != null) {
-                            dayClickListener.onDayClicked(day, view);
-                        }
-                        Log.i(TAG, "Clicked: " + day.toString());
+                    view.setChecked(true);
+                    day.isChecked = true;
+                    if (dayClickListener != null) {
+                        dayClickListener.onDayClicked(day, view);
                     }
+                    Log.i(TAG, "Clicked: " + day.toString());
                 }
             });
-        }else{
+        } else {
             view.setEnabled(false);
         }
     }
@@ -81,9 +81,26 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
             this.view = (DayView) view.findViewById(R.id.dayview);
         }
 
+        public void setDay(Day day){
+            if(this.day != null && this.day != day){
+                this.day.removeDayViewHolder();
+            }
+            this.day = day;
+        }
+
+        public void setChecked(boolean checked, Day day){
+            if(view != null && this.day == day){
+                view.setChecked(checked);
+            }
+        }
+
         public void removeDay(){
-            day.removeDayView();
-            day = null;
+            if(day != null) {
+                //To avoid accidental recursion.
+                Day old = day;
+                day = null;
+                old.removeDayViewHolder();
+            }
         }
     }
 

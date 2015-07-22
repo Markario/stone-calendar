@@ -13,7 +13,7 @@ public class Day {
     public long time;
     public String label;
     public boolean isChecked = false;
-    private DayView dayView;
+    private DaysAdapter.DayViewHolder dayViewHolder;
 
     public Day(String label) {
         this.label = label;
@@ -29,16 +29,23 @@ public class Day {
         //System.out.println(toString());
     }
 
-    public DayView getDayView() {
-        return dayView;
+    public DaysAdapter.DayViewHolder getDayViewHolder() {
+        return dayViewHolder;
     }
 
-    public void setDayView(DayView dayView) {
-        this.dayView = dayView;
+    public void setDayViewHolder(DaysAdapter.DayViewHolder dayViewHolder) {
+        System.out.println("Adding day view holder: "+toString());
+        this.dayViewHolder = dayViewHolder;
     }
 
-    public void removeDayView(){
-        this.dayView = null;
+    public void removeDayViewHolder(){
+        System.out.println("Removing day view holder: "+toString());
+        if(this.dayViewHolder != null){
+            //To avoid accidental recursion.
+            DaysAdapter.DayViewHolder old = this.dayViewHolder;
+            this.dayViewHolder = null;
+            old.removeDay();
+        }
     }
 
     @Override
