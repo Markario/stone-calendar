@@ -16,6 +16,13 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
 
     private int dayTextAppearanceId;
     private int dayHeaderTextAppearanceId;
+    private boolean checkable = false;
+    private DayClickListener dayClickListener;
+
+    public DaysAdapter(boolean checkable, DayClickListener dayClickListener) {
+        this.checkable = checkable;
+        this.dayClickListener = dayClickListener;
+    }
 
     @Override
     public int getItemCount() {
@@ -27,8 +34,13 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
         Context context = parent.getContext();
         DayViewHolder vh = new DayViewHolder(LayoutInflater.from(context).inflate(R.layout.view_day, parent, false));
         vh.view.setTextAppearance(context, dayTextAppearanceId);
-
         return vh;
+    }
+
+    @Override
+    public void onViewRecycled(DayViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.removeDay();
     }
 
     @Override
@@ -39,21 +51,39 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
 
         final Day day = getItem(position);
         view.setText(day.label);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setChecked(true);
-                Log.i(TAG, "Clicked: " + day.toString());
-            }
-        });
+
+        if(checkable) {
+            view.setChecked(day.isChecked);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!view.isChecked()) {
+                        view.setChecked(true);
+                        day.isChecked = true;
+                        if (dayClickListener != null) {
+                            dayClickListener.onDayClicked(day, view);
+                        }
+                        Log.i(TAG, "Clicked: " + day.toString());
+                    }
+                }
+            });
+        }else{
+            view.setEnabled(false);
+        }
     }
 
     public static class DayViewHolder extends RecyclerView.ViewHolder {
         final DayView view;
+        private Day day;
 
         public DayViewHolder(View view) {
             super(view);
             this.view = (DayView) view.findViewById(R.id.dayview);
+        }
+
+        public void removeDay(){
+            day.removeDayView();
+            day = null;
         }
     }
 
@@ -63,5 +93,9 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
 
     public void setDayHeaderTextAppearanceId(int dayHeaderTextAppearanceId) {
         this.dayHeaderTextAppearanceId = dayHeaderTextAppearanceId;
+    }
+
+    public interface DayClickListener{
+        public void onDayClicked(Day day, DayView view);
     }
 }

@@ -12,6 +12,8 @@ public class Day {
     public int dayOfWeek;
     public long time;
     public String label;
+    public boolean isChecked = false;
+    private DayView dayView;
 
     public Day(String label) {
         this.label = label;
@@ -25,6 +27,18 @@ public class Day {
         this.label = dayOfMonth + "";
         time = calendar.getTimeInMillis();
         //System.out.println(toString());
+    }
+
+    public DayView getDayView() {
+        return dayView;
+    }
+
+    public void setDayView(DayView dayView) {
+        this.dayView = dayView;
+    }
+
+    public void removeDayView(){
+        this.dayView = null;
     }
 
     @Override

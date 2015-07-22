@@ -63,11 +63,11 @@ public class WeeksView extends RecyclerView {
         setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
-    public final void init(String[] daysOfWeek) {
+    public final void init(String[] daysOfWeek, boolean checkable, DaysAdapter.DayClickListener dayClickListener) {
         this.numDayColumns = daysOfWeek.length;
         layoutManager = new GridLayoutManager(getContext(), numDayColumns);
         setLayoutManager(layoutManager);
-        DaysAdapter adapter = new DaysAdapter();
+        DaysAdapter adapter = new DaysAdapter(checkable, dayClickListener);
         adapter.setDayTextAppearanceId(dayTextAppearanceId);
         adapter.setDayHeaderTextAppearanceId(dayHeaderTextAppearanceId);
         setAdapter(adapter);

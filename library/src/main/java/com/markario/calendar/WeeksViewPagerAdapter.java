@@ -29,14 +29,16 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
     int firstWeekDay;
     int daysInWeeksView;
     private Date actualFirstDate;
+    private DaysAdapter.DayClickListener dayClickListener;
 
     List<Day> days = new ArrayList<>();
 
-    public WeeksViewPagerAdapter(int poolSize, String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay) {
+    public WeeksViewPagerAdapter(int poolSize, String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay, DaysAdapter.DayClickListener dayClickListener) {
         this.weeksViewPool = new Pools.SynchronizedPool<>(poolSize);
         this.dayLabels = dayLabels;
         this.firstWeekDay = firstWeekDay;
         this.weeksToDisplay = weeksToDisplay;
+        this.dayClickListener = dayClickListener;
 
         while(calendar.get(Calendar.DAY_OF_WEEK) != firstWeekDay){
             calendar.add(Calendar.DAY_OF_MONTH, -1);
@@ -71,7 +73,7 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
 
         if(view == null){
             view = new WeeksView(container.getContext());
-            view.init(dayLabels);
+            view.init(dayLabels, true, dayClickListener);
         }
 
         container.addView(view);
