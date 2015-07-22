@@ -12,7 +12,6 @@
         android:layout_height="@dimen/min_touch"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:textColor="@color/selector_day_text"
         android:background="@drawable/selector_day"
         android:gravity="center" />
 </LinearLayout>

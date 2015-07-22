@@ -34,7 +34,7 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
     public DayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         DayViewHolder vh = new DayViewHolder(LayoutInflater.from(context).inflate(R.layout.view_day, parent, false));
-        //vh.view.setTextAppearance(context, dayTextAppearanceId);
+        vh.view.setTextAppearance(context, dayTextAppearanceId);
         return vh;
     }
 
