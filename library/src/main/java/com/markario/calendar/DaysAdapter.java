@@ -57,6 +57,12 @@ public class DaysAdapter extends ArrayRecyclerAdapter<Day, DaysAdapter.DayViewHo
 
         if(checkable) {
             view.setChecked(day.isChecked);
+            if(day.isChecked && !day.clickListenerAdded){
+                if (dayClickListener != null) {
+                    dayClickListener.onDayClicked(day, view);
+                }
+            }
+            day.clickListenerAdded = true;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

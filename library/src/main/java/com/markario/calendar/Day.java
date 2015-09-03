@@ -13,6 +13,7 @@ public class Day {
     public long time;
     public String label;
     public boolean isChecked = false;
+    public boolean clickListenerAdded = false;
     private DaysAdapter.DayViewHolder dayViewHolder;
 
     public Day(String label) {

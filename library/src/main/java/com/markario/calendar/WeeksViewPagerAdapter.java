@@ -40,13 +40,18 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
         this.weeksToDisplay = weeksToDisplay;
         this.dayClickListener = dayClickListener;
 
+        Calendar today = Calendar.getInstance();
         while(calendar.get(Calendar.DAY_OF_WEEK) != firstWeekDay){
             calendar.add(Calendar.DAY_OF_MONTH, -1);
             actualFirstDate = calendar.getTime();
         }
 
         while(calendar.before(lastDay)){
-            days.add(new Day(calendar));
+            Day day = new Day(calendar);
+            if(calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) && calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)){
+                day.isChecked = true;
+            }
+            days.add(day);
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
@@ -113,6 +118,11 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
         }
 
         return i;
+    }
+
+    public Day getDayForDate(Date target){
+        int pos = getPositionForDate(target);
+        return days.get(pos);
     }
 
     public Day getDayForPage(int page){
