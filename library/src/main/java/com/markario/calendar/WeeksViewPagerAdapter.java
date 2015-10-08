@@ -130,4 +130,9 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
         Day day = days.get(getFirstDayIndexForViewPosition(page));
         return day;
     }
+
+    public int getPageForDay(Day day){
+        int dayIndex = days.indexOf(day);
+        return dayIndex/daysInWeeksView;
+    }
 }

@@ -74,6 +74,31 @@ public class Day implements Parcelable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Day)) return false;
+
+        Day day = (Day) o;
+
+        if (month != day.month) return false;
+        if (year != day.year) return false;
+        if (dayOfMonth != day.dayOfMonth) return false;
+        if (dayOfWeek != day.dayOfWeek) return false;
+        return !(label != null ? !label.equals(day.label) : day.label != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = month;
+        result = 31 * result + year;
+        result = 31 * result + dayOfMonth;
+        result = 31 * result + dayOfWeek;
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
