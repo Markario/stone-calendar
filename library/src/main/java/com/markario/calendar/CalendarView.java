@@ -53,9 +53,9 @@ public class CalendarView extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
     }
 
-    public void load(String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay, DaysAdapter.DayClickListener dayClickListener) {
+    public void load(String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay, Calendar dayToSelect, DaysAdapter.DayClickListener dayClickListener) {
         System.out.println("Starting Calendar init");
-        pagerAdapter = new WeeksViewPagerAdapter(5, dayLabels, firstWeekDay, weeksToDisplay, calendar, lastDay, dayClickListener);
+        pagerAdapter = new WeeksViewPagerAdapter(5, dayLabels, firstWeekDay, weeksToDisplay, calendar, lastDay, dayToSelect, dayClickListener);
         pager.setAdapter(pagerAdapter);
         pager.setOverScrollMode(View.OVER_SCROLL_NEVER);
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

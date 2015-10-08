@@ -1,11 +1,14 @@
 package com.markario.calendar;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Calendar;
 
 /**
  * Created by markzepeda on 6/1/15.
  */
-public class Day {
+public class Day implements Parcelable {
     public int month;
     public int year;
     public int dayOfMonth;
@@ -60,4 +63,41 @@ public class Day {
                 ", label='" + label + '\'' +
                 '}';
     }
+
+    protected Day(Parcel in) {
+        month = in.readInt();
+        year = in.readInt();
+        dayOfMonth = in.readInt();
+        dayOfWeek = in.readInt();
+        time = in.readLong();
+        label = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(month);
+        dest.writeInt(year);
+        dest.writeInt(dayOfMonth);
+        dest.writeInt(dayOfWeek);
+        dest.writeLong(time);
+        dest.writeString(label);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Day> CREATOR = new Parcelable.Creator<Day>() {
+        @Override
+        public Day createFromParcel(Parcel in) {
+            return new Day(in);
+        }
+
+        @Override
+        public Day[] newArray(int size) {
+            return new Day[size];
+        }
+    };
 }
