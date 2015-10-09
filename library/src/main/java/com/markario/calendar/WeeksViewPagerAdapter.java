@@ -33,14 +33,13 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
 
     List<Day> days = new ArrayList<>();
 
-    public WeeksViewPagerAdapter(int poolSize, String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay, DaysAdapter.DayClickListener dayClickListener) {
+    public WeeksViewPagerAdapter(int poolSize, String[] dayLabels, int firstWeekDay, int weeksToDisplay, Calendar calendar, Calendar lastDay, Calendar dayToSelect, DaysAdapter.DayClickListener dayClickListener) {
         this.weeksViewPool = new Pools.SynchronizedPool<>(poolSize);
         this.dayLabels = dayLabels;
         this.firstWeekDay = firstWeekDay;
         this.weeksToDisplay = weeksToDisplay;
         this.dayClickListener = dayClickListener;
 
-        Calendar today = Calendar.getInstance();
         while(calendar.get(Calendar.DAY_OF_WEEK) != firstWeekDay){
             calendar.add(Calendar.DAY_OF_MONTH, -1);
             actualFirstDate = calendar.getTime();
@@ -48,8 +47,10 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
 
         while(calendar.before(lastDay)){
             Day day = new Day(calendar);
-            if(calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) && calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)){
-                day.isChecked = true;
+            if(dayToSelect != null) {
+                if (calendar.get(Calendar.DAY_OF_YEAR) == dayToSelect.get(Calendar.DAY_OF_YEAR) && calendar.get(Calendar.YEAR) == dayToSelect.get(Calendar.YEAR)) {
+                    day.isChecked = true;
+                }
             }
             days.add(day);
             calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -128,5 +129,10 @@ public class WeeksViewPagerAdapter extends PagerAdapter {
     public Day getDayForPage(int page){
         Day day = days.get(getFirstDayIndexForViewPosition(page));
         return day;
+    }
+
+    public int getPageForDay(Day day){
+        int dayIndex = days.indexOf(day);
+        return dayIndex/daysInWeeksView;
     }
 }
